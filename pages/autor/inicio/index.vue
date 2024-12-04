@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import core from "@redocly/ajv/lib/vocabularies/core";
+import {NavigationMenuLink, navigationMenuTriggerStyle} from "~/components/ui/navigation-menu";
 definePageMeta({
     layout: 'cusmtom',
 
@@ -11,7 +12,7 @@ const orreo=ref()
 </script>
 
 <template>
-    <div class="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
+    <div class="w-full h-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
         <div class="flex items-center justify-center py-12">
             <div class="mx-auto grid w-[350px] gap-6">
                 <div class="grid gap-2 text-center">
@@ -40,9 +41,10 @@ const orreo=ref()
                         </div>
                         <Input id="password" type="password" required />
                     </div>
-                    <Button type="submit" class="w-full">
-                        Inicio
-                    </Button>
+
+                    <NavigationMenuLink href="/panel/" :class="navigationMenuTriggerStyle()">
+                        Registro
+                    </NavigationMenuLink>
                     <Button variant="outline" class="w-full">
                         Registro
                     </Button>
