@@ -1,10 +1,12 @@
 <script setup lang="ts">
+definePageMeta({
+    layout: 'panel',
 
-import Example from "~/components/forms/Example.vue";
+})
 </script>
 
 <template>
-<example/>
+    <crear-blog/>
 </template>
 
 <style scoped>

@@ -4,7 +4,7 @@ import {
     AvatarFallback,
     AvatarImage,
 } from '@/components/ui/avatar'
-
+import { useRouter } from '#imports'
 import {
     Breadcrumb,
     BreadcrumbItem,
@@ -74,14 +74,20 @@ import {
     Trash2,
 
 } from 'lucide-vue-next'
+import { Button } from '@/components/ui/button'
+import { useAuthStore } from '~/stores/auth'
+
+const authStore = useAuthStore()
+
+const router = useRouter()
 import { ref } from 'vue'
 import Dark from "~/components/ui/dark.vue";
 
 // This is sample data.
 const data = {
     user: {
-        name: 'shadcn',
-        email: 'm@example.com',
+        name: authStore.user.firstName,
+        email: authStore.user.email,
         avatar: '/avatars/shadcn.jpg',
     },
     teams: [
@@ -103,106 +109,33 @@ const data = {
     ],
     navMain: [
         {
-            title: 'Playground',
+            title: 'Publicaciones',
             url: '#',
             icon: SquareTerminal,
             isActive: true,
             items: [
                 {
-                    title: 'History',
-                    url: '#',
+                    title: 'Crear',
+                    url: '/post/crear',
                 },
                 {
-                    title: 'Starred',
-                    url: '#',
-                },
-                {
-                    title: 'Settings',
-                    url: '#',
+                    title: 'Pulicaciones',
+                    url: '/panel/',
                 },
             ],
+
         },
         {
-            title: 'Models',
+            title: 'Rutinas',
             url: '#',
-            icon: Bot,
+            icon: SquareTerminal,
+            isActive: true,
             items: [
                 {
-                    title: 'Genesis',
-                    url: '#',
-                },
-                {
-                    title: 'Explorer',
-                    url: '#',
-                },
-                {
-                    title: 'Quantum',
-                    url: '#',
+                    title: 'Comidas',
+                    url: '/rutina/comidas',
                 },
             ],
-        },
-        {
-            title: 'Documentation',
-            url: '#',
-            icon: BookOpen,
-            items: [
-                {
-                    title: 'Introduction',
-                    url: '#',
-                },
-                {
-                    title: 'Get Started',
-                    url: '#',
-                },
-                {
-                    title: 'Tutorials',
-                    url: '#',
-                },
-                {
-                    title: 'Changelog',
-                    url: '#',
-                },
-            ],
-        },
-        {
-            title: 'Settings',
-            url: '#',
-            icon: Settings2,
-            items: [
-                {
-                    title: 'General',
-                    url: '#',
-                },
-                {
-                    title: 'Team',
-                    url: '#',
-                },
-                {
-                    title: 'Billing',
-                    url: '#',
-                },
-                {
-                    title: 'Limits',
-                    url: '#',
-                },
-            ],
-        },
-    ],
-    projects: [
-        {
-            name: 'Design Engineering',
-            url: '#',
-            icon: Frame,
-        },
-        {
-            name: 'Sales & Marketing',
-            url: '#',
-            icon: PieChart,
-        },
-        {
-            name: 'Travel',
-            url: '#',
-            icon: Map,
         },
     ],
 }
@@ -212,68 +145,23 @@ const activeTeam = ref(data.teams[0])
 function setActiveTeam(team: typeof data.teams[number]) {
     activeTeam.value = team
 }
+function cerrar() {
+    authStore.logout()
+    // Redrigir al usuario a la página de inicio de sesión
+    router.push('/')
+
+}
+import Toaster from '@/components/ui/toast/Toaster.vue'
 </script>
 
 <template>
+    <Toaster />
     <SidebarProvider>
         <Sidebar collapsible="icon">
-            <SidebarHeader>
-                <SidebarMenu>
-                    <SidebarMenuItem>
-                        <DropdownMenu>
-                            <DropdownMenuTrigger as-child>
-                                <SidebarMenuButton
-                                    size="lg"
-                                    class="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
-                                >
-                                    <div class="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                                        <component :is="activeTeam.logo" class="size-4" />
-                                    </div>
-                                    <div class="grid flex-1 text-left text-sm leading-tight">
-                                        <span class="truncate font-semibold">{{ activeTeam.name }}</span>
-                                        <span class="truncate text-xs">{{ activeTeam.plan }}</span>
-                                    </div>
-                                    <ChevronsUpDown class="ml-auto" />
-                                </SidebarMenuButton>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent
-                                class="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
-                                align="start"
-                                side="bottom"
-                                :side-offset="4"
-                            >
-                                <DropdownMenuLabel class="text-xs text-muted-foreground">
-                                    Teams
-                                </DropdownMenuLabel>
-                                <DropdownMenuItem
-                                    v-for="(team, index) in data.teams"
-                                    :key="team.name"
-                                    class="gap-2 p-2"
-                                    @click="setActiveTeam(team)"
-                                >
-                                    <div class="flex size-6 items-center justify-center rounded-sm border">
-                                        <component :is="team.logo" class="size-4 shrink-0" />
-                                    </div>
-                                    {{ team.name }}
-                                    <DropdownMenuShortcut>⌘{{ index + 1 }}</DropdownMenuShortcut>
-                                </DropdownMenuItem>
-                                <DropdownMenuSeparator />
-                                <DropdownMenuItem class="gap-2 p-2">
-                                    <div class="flex size-6 items-center justify-center rounded-md border bg-background">
-                                        <Plus class="size-4" />
-                                    </div>
-                                    <div class="font-medium text-muted-foreground">
-                                        Add team
-                                    </div>
-                                </DropdownMenuItem>
-                            </DropdownMenuContent>
-                        </DropdownMenu>
-                    </SidebarMenuItem>
-                </SidebarMenu>
-            </SidebarHeader>
+
             <SidebarContent>
                 <SidebarGroup>
-                    <SidebarGroupLabel>Platform</SidebarGroupLabel>
+                    <SidebarGroupLabel>Plataforma</SidebarGroupLabel>
                     <SidebarMenu>
                         <Collapsible
                             v-for="item in data.navMain"
@@ -308,46 +196,7 @@ function setActiveTeam(team: typeof data.teams[number]) {
                         </Collapsible>
                     </SidebarMenu>
                 </SidebarGroup>
-                <SidebarGroup class="group-data-[collapsible=icon]:hidden">
-                    <SidebarGroupLabel>Projects</SidebarGroupLabel>
-                    <SidebarMenu>
-                        <SidebarMenuItem
-                            v-for="item in data.projects"
-                            :key="item.name"
-                        >
-                            <SidebarMenuButton as-child>
-                                <a :href="item.url">
-                                    <component :is="item.icon" />
-                                    <span>{{ item.name }}</span>
-                                </a>
-                            </SidebarMenuButton>
-                            <DropdownMenu>
-                                <DropdownMenuTrigger as-child>
-                                    <SidebarMenuAction show-on-hover>
-                                        <MoreHorizontal />
-                                        <span class="sr-only">More</span>
-                                    </SidebarMenuAction>
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent class="w-48 rounded-lg" side="bottom" align="end">
-                                    <DropdownMenuItem>
-                                        <Folder class="text-muted-foreground" />
-                                        <span>View Project</span>
-                                    </DropdownMenuItem>
-                                    <DropdownMenuItem>
-                                        <Forward class="text-muted-foreground" />
-                                        <span>Share Project</span>
-                                    </DropdownMenuItem>
-                                    <DropdownMenuSeparator />
-                                    <DropdownMenuItem>
-                                        <Trash2 class="text-muted-foreground" />
-                                        <span>Delete Project</span>
-                                    </DropdownMenuItem>
-                                </DropdownMenuContent>
-                            </DropdownMenu>
-                        </SidebarMenuItem>
 
-                    </SidebarMenu>
-                </SidebarGroup>
             </SidebarContent>
             <SidebarFooter>
                 <SidebarMenu>
@@ -386,33 +235,22 @@ function setActiveTeam(team: typeof data.teams[number]) {
                                         </div>
                                     </div>
                                 </DropdownMenuLabel>
-                                <DropdownMenuSeparator />
                                 <DropdownMenuGroup>
+                                    <NuxtLink to="/autor/cuenta/">
                                     <DropdownMenuItem>
-                                        <Sparkles />
-                                        Upgrade to Pro
+
+                                            <BadgeCheck />
+                                            Cuenta
+
                                     </DropdownMenuItem>
+                                    </NuxtLink>
                                 </DropdownMenuGroup>
-                                <DropdownMenuSeparator />
                                 <DropdownMenuGroup>
-                                    <DropdownMenuItem>
-                                        <BadgeCheck />
-                                        Account
-                                    </DropdownMenuItem>
-                                    <DropdownMenuItem>
-                                        <CreditCard />
-                                        Billing
-                                    </DropdownMenuItem>
-                                    <DropdownMenuItem>
-                                        <Bell />
-                                        Notifications
-                                    </DropdownMenuItem>
+                                        <DropdownMenuItem type="button">
+                                            <BadgeCheck />
+                                            Cuenta
+                                        </DropdownMenuItem>
                                 </DropdownMenuGroup>
-                                <DropdownMenuSeparator />
-                                <DropdownMenuItem>
-                                    <LogOut />
-                                    Log out
-                                </DropdownMenuItem>
                             </DropdownMenuContent>
                         </DropdownMenu>
                     </SidebarMenuItem>
@@ -430,9 +268,19 @@ function setActiveTeam(team: typeof data.teams[number]) {
                     </Breadcrumb>
                 </div>
             </header>
-            <div class="flex flex-1 flex-col gap-4 p-4 pt-0">
+            <div class="flex flex-1 flex-col gap-4 p-4 pt-0 fondo">
                 <slot></slot>
             </div>
         </SidebarInset>
     </SidebarProvider>
 </template>
+
+<style>
+.fondo{
+    background-color: #ffffff;
+    opacity: 1;
+    background-image:  linear-gradient(#f9f9f9 1.1px, transparent 1.1px), linear-gradient(to right, #f9f9f9 1.1px, #ffffff 1.1px);
+    background-size: 22px 22px;
+}
+
+</style>

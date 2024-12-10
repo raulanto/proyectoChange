@@ -50,6 +50,7 @@ const components: { title: string, href: string, description: string }[] = [
 </script>
 
 <template>
+    <Toaster />
     <section class="w-full flex justify-center items-center">
         <NavigationMenu>
             <NavigationMenuList>
@@ -123,7 +124,7 @@ const components: { title: string, href: string, description: string }[] = [
                 </NavigationMenuItem>
                 <NavigationMenuItem>
                     <NavigationMenuLink href="/autor/inicio/" :class="navigationMenuTriggerStyle()">
-                        Registro
+                        Inicar Seccion
                     </NavigationMenuLink>
                 </NavigationMenuItem>
             </NavigationMenuList>
