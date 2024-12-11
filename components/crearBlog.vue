@@ -103,7 +103,7 @@ const {data: postData, refresh,status} = useAsyncData('fetch-cita', () =>
     })
 )
 
-const cities = ref([
+const Post = ref([
     { name: 'Para publico en general', code: true },
     { name: 'Solo para autor', code: false },
 ]);
@@ -158,7 +158,7 @@ const cities = ref([
             <FormItem>
                 <FormLabel>Publicado</FormLabel>
                 <FormControl >
-                    <Select v-bind="componentField" v-model="valor2" :options="cities" optionLabel="name" placeholder="Select a City" size="small" class="w-full md:w-56" />
+                    <Select v-bind="componentField" v-model="valor2" :options="Post" optionLabel="name" placeholder="Seleccione estado" size="small" class="w-full md:w-56" />
                 </FormControl>
                 <FormDescription>
                     Indica si el post debe estar publicado inmediatamente.

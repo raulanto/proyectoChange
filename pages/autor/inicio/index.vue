@@ -96,7 +96,7 @@ const onSubmit = handleSubmit(async (values) => {
                             <FormItem>
                                 <FormLabel>Contraseña</FormLabel>
                                 <FormControl>
-                                    <Input class="w-full" placeholder="contraseña" type="text" v-bind="componentField"/>
+                                    <Input class="w-full" placeholder="contraseña" type="password" v-bind="componentField"/>
                                 </FormControl>
 
                                 <FormMessage/>

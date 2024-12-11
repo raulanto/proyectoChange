@@ -91,9 +91,10 @@ const onSubmit = handleSubmit(async (values) => {
         console.log(error)
         console.log(data)
         toast({
-            title: 'Publicacion Creada',
+            title: 'Comida Creada',
 
         })
+        router.push('/rutina/comidas/')
     } catch (error) {
         console.error('Error en la solicitud de inicio de sesión:', error)
         apiError.value = 'Error de conexión con el servidor.'

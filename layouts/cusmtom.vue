@@ -124,7 +124,7 @@ const components: { title: string, href: string, description: string }[] = [
                 </NavigationMenuItem>
                 <NavigationMenuItem>
                     <NavigationMenuLink href="/autor/inicio/" :class="navigationMenuTriggerStyle()">
-                        Inicar Seccion
+                        Iniciar Sesion
                     </NavigationMenuLink>
                 </NavigationMenuItem>
             </NavigationMenuList>

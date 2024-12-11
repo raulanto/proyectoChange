@@ -135,6 +135,10 @@ const data = {
                     title: 'Comidas',
                     url: '/rutina/comidas',
                 },
+                {
+                    title: 'Ejercicios',
+                    url: '/rutina/ejercicios',
+                },
             ],
         },
     ],
@@ -246,9 +250,9 @@ import Toaster from '@/components/ui/toast/Toaster.vue'
                                     </NuxtLink>
                                 </DropdownMenuGroup>
                                 <DropdownMenuGroup>
-                                        <DropdownMenuItem type="button">
+                                        <DropdownMenuItem @click="cerrar()" type="button">
                                             <BadgeCheck />
-                                            Cuenta
+                                            Cerrar
                                         </DropdownMenuItem>
                                 </DropdownMenuGroup>
                             </DropdownMenuContent>
